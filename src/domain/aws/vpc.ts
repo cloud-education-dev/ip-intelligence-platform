@@ -1,8 +1,8 @@
 import { CidrBlock, cidrContains, cidrOverlaps, parseCidr } from '../ip/ipv4';
 
 export type SubnetTier = 'public' | 'private' | 'database' | 'management';
-export interface AwsSubnet { id: string; name: string; cidr: string; az: string; tier: SubnetTier; }
-export interface VpcDesign { id: string; name: string; cidr: string; subnets: AwsSubnet[]; }
+export interface AwsSubnet { id: string; name: string; cidr: string; az: string; tier: SubnetTier; x?: number; y?: number; }
+export interface VpcDesign { id: string; name: string; cidr: string; subnets: AwsSubnet[]; x?: number; y?: number; }
 export interface ValidationIssue { severity: 'error'|'warning'|'info'; code: string; message: string; target?: string; explanation: string; }
 
 export function validateVpc(design: VpcDesign): ValidationIssue[] {

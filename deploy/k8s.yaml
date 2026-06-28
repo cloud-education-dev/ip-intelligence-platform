@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: ip-intelligence-platform }
+spec:
+  replicas: 2
+  selector: { matchLabels: { app: ip-intelligence-platform } }
+  template:
+    metadata: { labels: { app: ip-intelligence-platform } }
+    spec:
+      containers:
+        - name: web
+          image: ghcr.io/your-org/ip-intelligence-platform:latest
+          ports: [{ containerPort: 80 }]
+          readinessProbe: { httpGet: { path: /, port: 80 }, initialDelaySeconds: 5, periodSeconds: 10 }
+          livenessProbe: { httpGet: { path: /, port: 80 }, initialDelaySeconds: 10, periodSeconds: 20 }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: ip-intelligence-platform }
+spec:
+  selector: { app: ip-intelligence-platform }
+  ports: [{ port: 80, targetPort: 80 }]
+  type: ClusterIP

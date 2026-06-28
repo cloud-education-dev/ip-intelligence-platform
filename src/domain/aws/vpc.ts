@@ -21,4 +21,10 @@ export function validateVpc(design: VpcDesign): ValidationIssue[] {
   return issues;
 }
 
-export function awsUsableIps(cidr: string): number { return Math.max(parseCidr(cidr).total - 5, 0); }
+export function awsUsableIps(cidr: string): number {
+  try {
+    return Math.max(parseCidr(cidr).total - 5, 0);
+  } catch {
+    return 0;
+  }
+}
